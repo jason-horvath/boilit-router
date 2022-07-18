@@ -25,9 +25,13 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.ts"
   ],
-  "exclude": [],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
 }
