@@ -1,6 +1,6 @@
 {
   "name": "@larzilla/boilit-router",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A dynamic router package for the Lit web components library.",
   "files": ["dist"],
   "main": "dist/index.js",
@@ -10,6 +10,11 @@
   "license": "MIT",
   "private": false,
   "prepublish": "tsc",
+  "scripts": {
+    "compile": "tsc",
+    "postcompile": "cp ./package.json ./dist",
+    "dist": "yarn compile && yarn postcompile"
+  },
   "dependencies": {
     "lit": "^2.2.7"
   },
