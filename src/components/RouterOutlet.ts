@@ -27,19 +27,15 @@ export default class RouterOutlet extends LitElement {
 
   override async connectedCallback() {
     super.connectedCallback();
-    // this.routes.setRouteMap(this.compiledRouteMap());
-    console.log(this.routes);
-    console.log(window.location.pathname);
     this.navigateToPathname(window.location.pathname);
     this.routeNavigateListener();
   }
 
   navigateToPathname(path: string) {
     this.routeEntry = this.routes.get(path);
-    // const routePath = routeEntry.getPath();
     const route = this.routeEntry.getRoute();
     this.setRouteParams(this.routeEntry);
-    console.log(this.routeParams);
+
     if(route instanceof Route) {
       window.history.pushState({}, '', path);
       this.routeTag = route.customElementName;
