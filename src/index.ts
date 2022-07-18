@@ -1,7 +1,7 @@
-import Route from "./src/core/Route";
-import RouteCollection from "./src/components/RouterOutlet";
-import RouteMetaData from "./src/types/RouteMetaData";
-import baseRoutes from "./src/routes/base";
+import Route from "./core/Route";
+import RouteCollection from "./components/RouterOutlet";
+import RouteMetaData from "./types/RouteMetaData";
+import baseRoutes from "./routes/base";
 
 export {
   Route,
