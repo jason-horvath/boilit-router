@@ -1,6 +1,6 @@
 # BoiLit Router
 
-An easy to use dynamic routing package for [Lit](https://lit.dev/) 2.x. Note the context of this document will be based on the context of using [TypeScript](https://www.typescriptlang.org/)
+An easy to use dynamic routing package for [Lit 2.x](https://lit.dev/). Note the context of this document will be based on [TypeScript](https://www.typescriptlang.org/)
 
 ## Installation
 
@@ -8,7 +8,7 @@ Run `yarn add @larzilla/boilit-router`
 
 ### After installation
 
-Make sure that your server is setup to always load you `index` file or route, as this is crucial for you app to behave properly as a single page application.
+Make sure that your server is setup to always load your `index` file or route, as this is crucial for you app to behave properly as a single page application.
 
 ## How To Use Routing
 
