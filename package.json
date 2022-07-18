@@ -8,6 +8,7 @@
   "author": "Jason Horvath <jason.horvath@larzilla.com>",
   "license": "MIT",
   "private": false,
+  "prepublish": "tsc",
   "dependencies": {
     "lit": "^2.2.7"
   },
