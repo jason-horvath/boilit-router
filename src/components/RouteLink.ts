@@ -15,12 +15,10 @@ export default class RouteLink extends LitElement {
   
   override connectedCallback() {
     super.connectedCallback()
-    console.log(this.uri)
     this.addEventListener('onmousedown', () => this.navigate())
   }
 
   navigate() {
-    console.log(this.uri);
     if(this.uri === window.location.pathname) {
       return false;
     }
@@ -35,7 +33,7 @@ export default class RouteLink extends LitElement {
         uri: this.uri,
       } as RouteLinkEvent
     })
-    // console.log(event);
+
     return event;
   }
   override render() {
