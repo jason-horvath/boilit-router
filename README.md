@@ -144,7 +144,7 @@ export default class AppRoot extends LitElement {
 
 ```
 
-That is pretty much all there is to it, for static routes, everthing is taken care of. For dynamic routes, any component attached to the route will just need couple of small changes, but still fairly easy, which we'll get into next.
+That is pretty much all there is to it. For static routes, mostly everthing is taken care of if you do not care about page titles and description. For dynamic routes, any component attached to the route will just need couple of small changes, but still fairly easy, which we'll get into next.
 
 ## Dynamic Routes
 
