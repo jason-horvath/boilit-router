@@ -8,8 +8,8 @@ export default class RouteCollection {
     this.routeMap = new Map<String, Route>();
   }
 
-  add(key: string, route: Route) {
-    this.routeMap.set(key, route);
+  add(routePath: string, route: Route) {
+    this.routeMap.set(routePath, route);
   }
 
   get(uri: string): RouteEntry {
