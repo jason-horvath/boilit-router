@@ -57,12 +57,13 @@ export default class RouterOutlet extends LitElement {
   }
 
   redirectNotFound() {
-    const route = this.routes.get(this.notFoundUri);
+    this.routeEntry = this.routes.get(this.notFoundUri);
+    const route = this.routeEntry.getRoute();
     if(route instanceof Route) {
       window.history.pushState({}, '', this.notFoundUri);
       this.routeTag = route.customElementName;
     } else {
-      this.throwError(`Unable to find a matching route. Attempted to fallback to '/404', please add a '/404' route for proper behavoir.`);
+      this.throwError(`Unable to find a matching route. Attempted to fallback to '/404', please add a '/404' route for proper behavior.`);
     }
   }
 
