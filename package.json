@@ -1,10 +1,9 @@
 {
   "name": "@larzilla/boilit-router",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A dynamic router package for the Lit web components library.",
-  "files": ["dist"],
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "repository": "git@github.com:jason-horvath/boilit-router.git",
   "author": "Jason Horvath <jason.horvath@larzilla.com>",
   "license": "MIT",
@@ -12,7 +11,7 @@
   "prepublish": "tsc",
   "scripts": {
     "compile": "tsc",
-    "postcompile": "cp ./package.json ./dist",
+    "postcompile": "cp ./package.json ./dist && cp ./README.md ./dist",
     "dist": "yarn compile && yarn postcompile"
   },
   "dependencies": {
