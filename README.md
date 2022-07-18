@@ -270,7 +270,7 @@ Example
 ```typescript
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import "@larzilla/boilit-router/route-link";
+import "@larzilla/boilit-router/link";
 
 @customElement("layout-nav-main")
 export default class LayoutNavMain extends LitElement {
