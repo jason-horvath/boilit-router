@@ -260,3 +260,45 @@ It is very similar to getting params. Title and description do not need a parame
 - Get a a value from `vars` title: `this.getVar('my-var-key')`
 
 Of course lifecyle methods could be used as needed to have more concise calls in the `render()`, but that is subjective to each developer.
+
+## Linking to Routes
+
+Ok, so now that we can setup routes and get data, we need to link to them by using the `RouteLink` component, and then using the `route-link` tag with a parameter to tell it where it points to.
+
+Example
+
+```typescript
+import { html, css, LitElement } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import "@larzilla/boilit-router/route-link";
+
+@customElement("layout-nav-main")
+export default class LayoutNavMain extends LitElement {
+  static override styles = css`
+    route-link {
+      margin: 15px;
+    }
+    route-link:hover {
+      cursor: pointer;
+    }
+  `;
+
+  override render() {
+    return html`
+      <div class="layout-nav-main">
+        <route-link uri="/">Home</route-link>
+        <route-link uri="/products">Products</route-link>
+        <route-link uri="/product/specials">Product Specials</route-link>
+        <route-link uri="/about">About</route-link>
+        <route-link uri="/Contact">Contact</route-link>
+      </div>
+    `;
+  }
+}
+```
+
+That is all there is to creating a link to a route.
+
+### Contributing
+
+Anyone that would like to contribute, feel free to put in a pull request and I will take a look.
