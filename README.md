@@ -104,7 +104,7 @@ routes.add(
 
 That is pretty much all there is to using routes, you can go about preloading data how ever you want, and then pass it in as shown above. As you can see, what data is passed into the `vars` is very flexible to allow room for any needed data structure within.
 
-## Using the `RouterOutlet` Compoent
+## Using the `RouterOutlet` Component
 
 Using the `RouterOutlet` in your app is fairly simple, it is as easy as using any other `LitElement` by including a `router-outlet` tag in any `render()` html you want. The `router-outlet` tag takes in the routes setup in your `routes.ts` and will render every matching route.
 
