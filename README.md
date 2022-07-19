@@ -299,6 +299,10 @@ export default class LayoutNavMain extends LitElement {
 
 That is all there is to creating a link to a route.
 
+## Future Plans
+
+As this is in the early stages, hash, query strings, and reacting to the window location via back and forward buttons will be added.
+
 ### Contributing
 
 Anyone that would like to contribute, feel free to put in a pull request and I will take a look.
