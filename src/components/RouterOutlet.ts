@@ -10,17 +10,39 @@ import RenderProps from '../core/RenderProps';
 export default class RouterOutlet extends LitElement {
   static override styles = css`p { color: blue }`;
 
+  /**
+   * This is the location that is redirected to when there is no matching route.
+   * 
+   * @var string notFoundUir
+   */
   @property()
   notFoundUri: string = '/404';
 
+  /**
+   * The collection of routes that are used to match with
+   * 
+   * @var RouteCollection routes This should be configured in your own routes file
+   */
   @property()
   routes: RouteCollection = new RouteCollection();
 
-  @property({type: String})
-  routeTag = `/`;
 
+  /**
+   * The custom element tag for the router component.
+   * 
+   * @var String routeTag This should match whatever is in the @customElement decorator
+   */
+  @property({type: String})
+  routeTag = ``;
+
+  /**
+   * The parameters that were found in the route
+   * 
+   * @var Map<String, String> routeParams used to match up with the actual values that were entered in the url.
+   */
   @property()
   routeParams: Map<String, String> = new Map<String, String>();
+  
   
   @property()
   routeEntry: RouteEntry = new RouteEntry('', undefined);
