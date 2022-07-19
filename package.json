@@ -4,7 +4,10 @@
   "description": "A dynamic router package for the Lit web components library.",
   "main": "index.js",
   "types": "index.d.ts",
-  "repository": "git@github.com:jason-horvath/boilit-router.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jason-horvath/boilit-router.git"
+  },
   "author": "Jason Horvath <jason.horvath@larzilla.com>",
   "license": "MIT",
   "private": false,
