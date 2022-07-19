@@ -301,7 +301,7 @@ That is all there is to creating a link to a route.
 
 ## Future Plans
 
-As this is in the early stages, hash and uery strings.
+As this is in the early stages, handling hash and query strings will be added, but are not currently available.
 
 ### Contributing
 
