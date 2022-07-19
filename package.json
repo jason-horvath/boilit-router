@@ -1,6 +1,6 @@
 {
   "name": "@larzilla/boilit-router",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A dynamic router package for the Lit web components library.",
   "main": "index.js",
   "types": "index.d.ts",
