@@ -301,7 +301,7 @@ That is all there is to creating a link to a route.
 
 ## Future Plans
 
-As this is in the early stages, hash, query strings, and reacting to the window location via back and forward buttons will be added.
+As this is in the early stages, hash and uery strings.
 
 ### Contributing
 
