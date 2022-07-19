@@ -10,7 +10,7 @@ export default class RouteLink extends LitElement {
     }
   `;
   /**
-   * @var uri The uri of where they router-link should go.
+   * @var string uri The uri of where they router-link should go.
    */
   @property({type: String})
   uri = '';
