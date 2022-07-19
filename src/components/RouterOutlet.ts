@@ -19,6 +19,13 @@ export default class RouterOutlet extends LitElement {
   notFoundUri: string = '/404';
 
   /**
+   * The current route to be used
+   * 
+   * @var currentRoute Should be an instance of route or undefined on init, or no matching entry.
+   */
+  @property()
+  route: Route | undefined = undefined;
+  /**
    * The collection of routes that are used to match with
    * 
    * @var routes This should be configured in your own routes file
@@ -26,14 +33,13 @@ export default class RouterOutlet extends LitElement {
   @property()
   routes: RouteCollection = new RouteCollection();
 
-
   /**
    * The custom element tag for the router component.
    * 
    * @var routeTag This should match whatever is in the @customElement decorator
    */
   @property({type: String})
-  routeTag = ``;
+  routeTag = '';
 
   /**
    * The parameters that were found in the route
@@ -58,6 +64,20 @@ export default class RouterOutlet extends LitElement {
     super.connectedCallback();
     this.navigateToPathname(window.location.pathname);
     this.routeNavigateListener();
+    this.routePopStateListener();
+  }
+
+  /**
+   * Listens for the 'route-navigate' event that is triggered by the 'route-link' or anywhere else
+   */
+  routeNavigateListener() {
+    window.addEventListener('route-navigate', (e: any) => {
+      try {
+        this.navigateToPathname(e.detail.uri);
+      } catch (e) {
+        console.error(e);
+      }
+    })
   }
 
   /**
@@ -66,16 +86,30 @@ export default class RouterOutlet extends LitElement {
    * @param path The path that matches the route,
    */
   navigateToPathname(path: string) {
-    this.routeEntry = this.routes.get(path);
-    const route = this.routeEntry.getRoute();
-    this.setRouteParams(this.routeEntry);
+    this.setupRoute(path)
 
-    if(route instanceof Route) {
+    if(this.route instanceof Route) {
       window.history.pushState({}, '', path);
-      this.routeTag = route.customElementName;
+      this.routeTag = this.route.customElementName;
     } else {
       this.redirectNotFound()
     }
+  }
+
+  /**
+   * Listens to the popstate and does not push state to history to avoid, to allow back and forward navigation
+   */
+  routePopStateListener(): void {
+    window.addEventListener('popstate', (e) => {
+      const pathname = (e.target as Window).location.pathname;
+      this.setupRoute(pathname);
+
+      if(this.route instanceof Route) {
+        this.routeTag = this.route.customElementName;
+      } else {
+        this.redirectNotFound()
+      }
+    });
   }
 
   /**
@@ -110,16 +144,14 @@ export default class RouterOutlet extends LitElement {
   }
 
   /**
-   * Listens for the 'route-navigate' event that is triggered by the 'route-link' or anywhere else
+   * 
+   * 
+   * @param path The path matching the route.
    */
-  routeNavigateListener() {
-    window.addEventListener('route-navigate', (e: any) => {
-      try {
-        this.navigateToPathname(e.detail.uri);
-      } catch (e) {
-        console.error(e);
-      }
-    })
+  setupRoute(path: string): void {
+    this.routeEntry = this.routes.get(path);
+    this.setRouteParams(this.routeEntry);
+    this.route = this.routeEntry.getRoute();
   }
 
   /**
