@@ -8,6 +8,10 @@ export default class RouteLink extends LitElement {
     route-link:hover {
       cursor: pointer;
     }
+
+    a {
+      text-decoration: none;
+    }
   `;
   /**
    * @var uri The uri of where they router-link should go.
@@ -20,7 +24,7 @@ export default class RouteLink extends LitElement {
    */
   override connectedCallback() {
     super.connectedCallback()
-    this.addEventListener('onmousedown', () => this.navigate())
+    this.addEventListener('onmousedown', (e) => this.navigate(e))
   }
 
   /**
@@ -28,7 +32,8 @@ export default class RouteLink extends LitElement {
    * 
    * @returns boolean | Event
    */
-  navigate() {
+  navigate(e: Event) {
+    e.preventDefault();
     if(this.uri === window.location.pathname) {
       return false;
     }
@@ -58,6 +63,6 @@ export default class RouteLink extends LitElement {
    * @returns html
    */
   override render() {
-    return html`<a @click=${this.navigate}><slot></slot></a>`;
+    return html`<a href=${this.uri} @click=${(e: Event) => this.navigate(e)}><slot></slot></a>`;
   }
 }
