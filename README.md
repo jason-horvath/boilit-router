@@ -8,11 +8,11 @@ Run `yarn add @larzilla/boilit-router`
 
 ### After installation
 
-Make sure that your server is setup to always load your `index` file or route, as this is crucial for you app to behave properly as a single page application.
+Make sure that your server is setup to always load your `index` file or route, as this is crucial for your app to behave properly as a single page application.
 
 ## How To Use Routing
 
-In some place in your application, create a `routes` file, somewhere like `src/config/routes.ts` is a good start. BoiLit Router comes with some base routes for fallback and example, which is an instance of `RouteCollection` class. You can opt to use the base routes by importing them directly, or just creating a new `RouteCollection` class of your own. Is is recommended to have a route mapped to `/404`, since the router will try to fallback on that.
+In some place in your application, create a `routes` file, somewhere like `src/config/routes.ts` is a good start. BoiLit Router comes with some base routes for fallback and example, which is an instance of `RouteCollection` class. You can opt to use the base routes by importing them directly, or just creating a new `RouteCollection` class of your own. It is recommended to have a route mapped to `/404`, since the router will try to fallback on that.
 
 ### Adding Routes
 
@@ -144,7 +144,7 @@ export default class AppRoot extends LitElement {
 
 ```
 
-That is pretty much all there is to it. For static routes, mostly everthing is taken care of if you do not care about page titles and description. For dynamic routes, any component attached to the route will just need couple of small changes, but still fairly easy, which we'll get into next.
+That about covers static routes, mostly everthing is taken care of if you do not care about page titles and description. For dynamic routes, any component attached to the route will just need couple of small changes, but still fairly easy, which we'll get into next.
 
 ## Dynamic Routes
 
@@ -154,7 +154,7 @@ Dynamic route follow a common pattern of leading the portion of the URL you want
 // Dynamic route
 
 routes.add(
-  "/dynamic/:firstValue/exmaple/:secondValue", // See the portions lead by a colon.
+  "/dynamic/:firstValue/example/:secondValue", // See the portions lead by a colon.
   new Route("dynamic-view", require("@views/DynamicView")) // And then as before, use your component that will process the route.
 );
 ```
@@ -301,7 +301,7 @@ That is all there is to creating a link to a route.
 
 ## Future Plans
 
-As this is in the early stages, handling hash and query strings will be added, but are not currently available.
+As this is in the early stages, work is being done to handle query strings with PopState.
 
 ### Contributing
 
