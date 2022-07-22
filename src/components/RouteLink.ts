@@ -34,7 +34,8 @@ export default class RouteLink extends LitElement {
    */
   navigate(e: Event) {
     e.preventDefault();
-    if(this.uri === window.location.pathname) {
+    const { pathname, search } = window.location;
+    if(this.uri === `${pathname}${search}`) {
       return false;
     }
 
