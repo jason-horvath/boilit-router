@@ -56,8 +56,17 @@ export default class RenderProps {
    * @param key The string value of the 
    * @returns any
    */
-  getVar(key: String) {
+  getVar(key: String): string {
     return this?.data?.vars?.get(key) ?? '';
+  }
+
+  /**
+   * Get the Query Params
+   * 
+   * @param key The key of the get var
+   */
+  getQueryParam(key: string): string {
+    return this?.data?.query?.get(key) ?? '';
   }
 
   /**
