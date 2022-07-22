@@ -66,8 +66,7 @@ export default class Route {
   setMeta(meta: RouteMetaData) {
     this.meta = meta;
   }
-
-
+  
   /**
    * Get the meta
    * 
