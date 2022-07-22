@@ -215,7 +215,7 @@ export class DynamicExampleView extends LitElement {
 }
 ```
 
-#### Accessing the Dynamic Paramters
+### Accessing the Dynamic Paramters
 
 Notice in the above example, the `getParam()` calls. To get the value you want, just pass the same exact value from the route into the `getParam()` method, including the colon for consistency.
 
@@ -250,6 +250,28 @@ routes.add(
 ```
 
 That is all that is needed to get dynamic parameters.
+
+### Getting Query String Parameters
+
+The `RenderProps` class will use a `URLSearchParams` class with all of the `window.location.search` values. All of the data will be available through the `getQueryParam()` method.
+
+```typescript
+// ... LitElement `render()` to get ?name=value&street=value from the url.
+
+  override render () {
+    return html`
+      <div class="dynamic-example-view">
+        <h2>My Product Page</h2>
+        <div class="dynamic-example-message">
+          <p>'name' Get Var: ${this.props.getQueryParam('name')}</p>
+          <p>'street' Get Var: ${this.props.getQueryParam('street')}</p>
+        </div>
+      </div>
+    `;
+  }
+
+
+```
 
 ### Getting the `title`, `description`, and `vars`.
 
