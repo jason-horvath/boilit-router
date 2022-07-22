@@ -1,14 +1,22 @@
-import {html, css, LitElement} from 'lit';
+import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import RouteCollection from '../core/RouteCollection';
 import Route from '../core/Route';
 import routeElement from '../directives/RouteElementDirective';
 import RouteEntry from '../core/RouteEntry';
+import RenderData from '../types/RenderData';
 import RenderProps from '../core/RenderProps';
+import UriLocation from '../core/UriLocation';
 
 @customElement('router-outlet')
 export default class RouterOutlet extends LitElement {
-  static override styles = css`p { color: blue }`;
+
+  /**
+   * The source of truth for navigation.
+   * 
+   * @var location Used to properly process the full url after the `window.location.origin`
+   */
+  location: UriLocation = new UriLocation('');
 
   /**
    * This is the location that is redirected to when there is no matching route.
@@ -62,9 +70,16 @@ export default class RouterOutlet extends LitElement {
    */
   override async connectedCallback() {
     super.connectedCallback();
-    this.navigateToPathname(window.location.pathname);
+    this.navigateToUri(this.getFullUri());
     this.routeNavigateListener();
     this.routePopStateListener();
+  }
+
+  /**
+   * 
+   */
+  getFullUri(): string {
+    return `${window.location.pathname}${window.location.search}`;
   }
 
   /**
@@ -73,7 +88,7 @@ export default class RouterOutlet extends LitElement {
   routeNavigateListener() {
     window.addEventListener('route-navigate', (e: any) => {
       try {
-        this.navigateToPathname(e.detail.uri);
+        this.navigateToUri(e.detail.uri);
       } catch (e) {
         console.error(e);
       }
@@ -83,16 +98,25 @@ export default class RouterOutlet extends LitElement {
   /**
    * The will be triggered when matching routes.
    * 
-   * @param path The path that matches the route,
+   * @param uri The uri contains a matching route, everything after the `window.location.origin`
    */
-  navigateToPathname(path: string) {
-    this.setupRoute(path)
+  navigateToUri(uri: string) {
+    this.location.setUri(uri);
+    const path = this.location.getPath();
+    const finalUri = this.location.getFinalUri();
 
+    this.setupRoute(path);
+ 
     if(this.route instanceof Route) {
-      window.history.pushState({}, '', path);
+      window.history.pushState(
+        { name: `${finalUri}`}, 
+        '',
+        `${finalUri}`
+      );
+      
       this.routeTag = this.route.customElementName;
     } else {
-      this.redirectNotFound()
+      this.redirectNotFound();
     }
   }
 
@@ -101,7 +125,8 @@ export default class RouterOutlet extends LitElement {
    */
   routePopStateListener(): void {
     window.addEventListener('popstate', (e) => {
-      const pathname = (e.target as Window).location.pathname;
+      const { pathname, search } = (e.target as Window).location
+      this.location.setUri(`${pathname}${search}`);
       this.setupRoute(pathname);
 
       if(this.route instanceof Route) {
@@ -160,14 +185,15 @@ export default class RouterOutlet extends LitElement {
    * @returns RenderProps The object used to interface with the component
    */
   getRenderProps(): RenderProps {
-    const rederProps = {
+    const renderProps = {
       title: this.routeEntry.getRoute()?.meta.title ?? '',
       description: this.routeEntry.getRoute()?.meta.title ?? '',
       params: this.routeParams ?? new Map(),
-      vars: this.routeEntry.getRoute()?.meta?.vars ?? new Map()
-    }
+      vars: this.routeEntry.getRoute()?.meta?.vars ?? new Map(),
+      query: new URLSearchParams(window.location.search)
+    } as RenderData
 
-    return new RenderProps(rederProps);
+    return new RenderProps(renderProps);
   }
 
   /**
