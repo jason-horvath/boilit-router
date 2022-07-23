@@ -69,7 +69,7 @@ export default class RouteCollection {
       return match;
     }
     
-    return match === path ? match : '';
+    return match === path ? match : this.notFoundUri;
   }
 
   /**
