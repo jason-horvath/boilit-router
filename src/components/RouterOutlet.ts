@@ -19,14 +19,6 @@ export default class RouterOutlet extends LitElement {
   location: UriLocation = new UriLocation('');
 
   /**
-   * This is the location that is redirected to when there is no matching route.
-   * 
-   * @var notFoundUir
-   */
-  @property()
-  notFoundUri: string = '/404';
-
-  /**
    * The current route to be used
    * 
    * @var currentRoute Should be an instance of route or undefined on init, or no matching entry.
@@ -70,22 +62,44 @@ export default class RouterOutlet extends LitElement {
    */
   override async connectedCallback() {
     super.connectedCallback();
-    this.navigateToUri(this.getFullUri());
+    this.directNavigateToUri(this.getFullUri());
     this.routeNavigateListener();
     this.routePopStateListener();
   }
 
   /**
+   * Get Full Uri
    * 
+   * @returns string The full uri after the `window.location.origin`
    */
   getFullUri(): string {
-    return `${window.location.pathname}${window.location.search}`;
+    const { pathname, hash, search } = window.location;
+    return `${pathname}${hash}${search}`;
+  }
+
+  /**
+   * This is used when the window is directly navivated to. Push state should be left out since it will cause a `null` entry
+   * to be added to the history.
+   * 
+   * @param uri The uri contains a matching route, everything after the `window.location.origin`
+   */
+  directNavigateToUri(uri: string) {
+    this.location.setUri(uri);
+    const path = this.location.getPath();
+
+    this.setupRoute(path);
+ 
+    if(this.route instanceof Route) {
+      this.routeTag = this.route.customElementName;
+    } else {
+      this.redirectNotFound();
+    }
   }
 
   /**
    * Listens for the 'route-navigate' event that is triggered by the 'route-link' or anywhere else
    */
-  routeNavigateListener() {
+  routeNavigateListener(): void {
     window.addEventListener('route-navigate', (e: any) => {
       try {
         this.navigateToUri(e.detail.uri);
@@ -109,17 +123,17 @@ export default class RouterOutlet extends LitElement {
  
     if(this.route instanceof Route) {
       window.history.pushState(
-        { name: `${finalUri}`}, 
+        { key: finalUri }, 
         '',
-        `${finalUri}`
+        finalUri
       );
-      
+
       this.routeTag = this.route.customElementName;
     } else {
       this.redirectNotFound();
     }
   }
-
+  
   /**
    * Listens to the popstate and does not push state to history to avoid, to allow back and forward navigation
    */
@@ -158,18 +172,18 @@ export default class RouterOutlet extends LitElement {
    * Redirect when not found
    */
   redirectNotFound() {
-    this.routeEntry = this.routes.get(this.notFoundUri);
-    const route = this.routeEntry.getRoute();
-    if(route instanceof Route) {
-      window.history.pushState({}, '', this.notFoundUri);
-      this.routeTag = route.customElementName;
+    const notFoundUri = this.routes.getNotFoundUri();
+    this.setupRoute(notFoundUri);
+    if(this.route instanceof Route) {
+      this.routeTag = this.route.customElementName;
+      window.location.pathname = notFoundUri;
     } else {
       this.throwError(`Unable to find a matching route. Attempted to fallback to '/404', please add a '/404' route for proper behavior.`);
     }
   }
 
   /**
-   * 
+   * Set up the route for navigation
    * 
    * @param path The path matching the route.
    */
