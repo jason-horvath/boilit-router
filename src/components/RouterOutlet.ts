@@ -19,6 +19,14 @@ export default class RouterOutlet extends LitElement {
   location: UriLocation = new UriLocation('');
 
   /**
+   * Default tag element in the event there is no matching route.
+   * 
+   * @var defaultTag This will be rendered if there is not matching route at all.
+   */
+  @property({type: String})
+  defaultTag = 'div';
+
+  /**
    * The current route to be used
    * 
    * @var currentRoute Should be an instance of route or undefined on init, or no matching entry.
@@ -86,14 +94,10 @@ export default class RouterOutlet extends LitElement {
   directNavigateToUri(uri: string) {
     this.location.setUri(uri);
     const path = this.location.getPath();
-
+    
     this.setupRoute(path);
- 
-    if(this.route instanceof Route) {
-      this.routeTag = this.route.customElementName;
-    } else {
-      this.redirectNotFound();
-    }
+
+    this.routeTag = this.route instanceof Route ? this.route.customElementName : this.defaultTag ;
   }
 
   /**
@@ -101,12 +105,8 @@ export default class RouterOutlet extends LitElement {
    */
   routeNavigateListener(): void {
     window.addEventListener('route-navigate', (e: any) => {
-      try {
-        this.navigateToUri(e.detail.uri);
-      } catch (e) {
-        console.error(e);
-      }
-    })
+      this.navigateToUri(e.detail.uri);
+    });
   }
 
   /**
@@ -130,7 +130,7 @@ export default class RouterOutlet extends LitElement {
 
       this.routeTag = this.route.customElementName;
     } else {
-      this.redirectNotFound();
+      this.routeTag = this.defaultTag;
     }
   }
   
@@ -145,8 +145,6 @@ export default class RouterOutlet extends LitElement {
 
       if(this.route instanceof Route) {
         this.routeTag = this.route.customElementName;
-      } else {
-        this.redirectNotFound()
       }
     });
   }
@@ -166,20 +164,6 @@ export default class RouterOutlet extends LitElement {
         this.routeParams.set(name, value);
       }
     })
-  }
-
-  /**
-   * Redirect when not found
-   */
-  redirectNotFound() {
-    const notFoundUri = this.routes.getNotFoundUri();
-    this.setupRoute(notFoundUri);
-    if(this.route instanceof Route) {
-      this.routeTag = this.route.customElementName;
-      window.location.pathname = notFoundUri;
-    } else {
-      this.throwError(`Unable to find a matching route. Attempted to fallback to '/404', please add a '/404' route for proper behavior.`);
-    }
   }
 
   /**
@@ -208,15 +192,6 @@ export default class RouterOutlet extends LitElement {
     } as RenderData
 
     return new RenderProps(renderProps);
-  }
-
-  /**
-   * Throw an error with an input message.
-   * 
-   * @param message Error message to be used
-   */
-  throwError(message: string) {
-    throw new Error(`Router Outlet Error: ${message}`);
   }
 
   /**
