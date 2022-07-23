@@ -12,7 +12,11 @@ Make sure that your server is setup to always load your `index` file or route, a
 
 ## How To Use Routing
 
-In some place in your application, create a `routes` file, somewhere like `src/config/routes.ts` is a good start. BoiLit Router comes with some base routes for fallback and example, which is an instance of `RouteCollection` class. You can opt to use the base routes by importing them directly, or just creating a new `RouteCollection` class of your own. It is recommended to have a route mapped to `/404`, since the router will try to fallback on that.
+In some place in your application, create a `routes` file, somewhere like `src/config/routes.ts` is a good start. BoiLit Router comes with some base routes for fallback and example, which is an instance of `RouteCollection` class. You can opt to use the base routes by importing them directly, or just creating a new `RouteCollection` class of your own.
+
+### 404 Not Found Route
+
+When there is no matching route, `/404` will be the fallback. To show your own content, add a `/404` route to your `RouteCollection` with a matching component, and it will be rendered. You can opt to not have a `/404` route, which will return an empty `div` rendered from the `RouterOutlet.defaultTag`.
 
 ### Adding Routes
 
