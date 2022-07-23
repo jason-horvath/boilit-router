@@ -327,7 +327,7 @@ That is all there is to creating a link to a route.
 
 ## Future Plans
 
-As this is in the early stages, work is being done to handle query strings with PopState.
+Looking to add some more configuration features and options.
 
 ### Contributing
 
