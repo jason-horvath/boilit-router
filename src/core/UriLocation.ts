@@ -16,7 +16,7 @@ export default class UriLocation {
    * @returns string synonymouse with `window.location.pathname`
    */
   getPath(): string {
-    const path = this.uri.split('?')[0];
+    const path = this.uri.split('#')[0].split('?')[0];
 
     return path === '' ? '/' : path;
   }
