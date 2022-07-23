@@ -13,6 +13,7 @@ export default class RouteLink extends LitElement {
       text-decoration: none;
     }
   `;
+  
   /**
    * @var uri The uri of where they router-link should go.
    */
